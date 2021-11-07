@@ -5,7 +5,7 @@ import HeroesFilters from '../heroesFilters/HeroesFilters';
 import './app.scss';
 
 const App = () => {
-    
+
     return (
         <main className="app">
             <div className="content">
