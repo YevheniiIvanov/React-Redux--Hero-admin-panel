@@ -4,7 +4,9 @@ import { heroesFetching,
          heroesFetched,
          heroesFetchingError,
          heroCreated,
-         deleteHero } from "../actions"; 
+         deleteHero 
+        } from "../actions"; 
+
 const initialState = {
     heroes: [],
     heroesLoadingStatus: 'idle'
