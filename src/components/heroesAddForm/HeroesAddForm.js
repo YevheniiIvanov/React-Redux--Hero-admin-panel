@@ -4,15 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { heroCreated} from '../heroesList/heroesSlice';
 
 import { v4 as uuidv4 } from 'uuid';
-// Задача для этого компонента:+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Реализовать создание нового героя с введенными данными. Он должен попадать+++++++++
-// в общее состояние и отображаться в списке + фильтроваться++++++++++++++++++++++++++
-// Уникальный идентификатор персонажа можно сгенерировать через uiid++++++++++++++++++
-// Усложненная задача:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Персонаж создается и в файле json при помощи метода POST+++++++++++++++++++++++++++
-// Дополнительно:+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Элементы <option></option> желательно сформировать на базе+++++++++++++++++++++++++
-// данных из фильтров+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 const HeroesAddForm = () => {
     const [heroName, setHeroName] = useState('');
@@ -22,15 +13,6 @@ const HeroesAddForm = () => {
     const {filters, filterStatusLoading} = useSelector(state => state.filters);
     const dispatch = useDispatch();
     const {request} = useHttp();
-
-    // useEffect(() => {
-    //     dispatch(filtersFetching());
-    //     request("http://localhost:3001/filters")
-    //         .then(data => dispatch(filtersFetched(data)))
-    //         .catch(() => dispatch(filtersFetchingError()))
-
-    //     // eslint-disable-next-line
-    // }, []);
 
     const onSubmitHandled = (e) => {
         e.preventDefault();
