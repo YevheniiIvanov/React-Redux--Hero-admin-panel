@@ -1,1 +1,1 @@
-This is test project with hero admin panel!
+This is test project with hero admin panel! Done with React + Redux. You can see how it work at http://hero-panel.yevheniiivanov.com but POST request will bee work if you download it in your computer and install all dependencies in package.json with comand "npm i" !
