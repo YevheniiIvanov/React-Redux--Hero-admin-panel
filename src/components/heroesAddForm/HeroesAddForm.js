@@ -2,6 +2,8 @@ import {useHttp} from '../../hooks/http.hook';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { heroCreated} from '../heroesList/heroesSlice';
+import { selectAll } from '../heroesFilters/filtersSlice';
+import store from '../../store';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,7 +12,8 @@ const HeroesAddForm = () => {
     const [heroDescr, setHeroDescr] = useState('');
     const [heroElement, setHeroElement] = useState('');
 
-    const {filters, filterStatusLoading} = useSelector(state => state.filters);
+    const {filterStatusLoading} = useSelector(state => state.filters);
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -25,9 +28,10 @@ const HeroesAddForm = () => {
         }
 
         request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
-            .then(res => console.log(res, 'Отправка успешна'))
             .then(dispatch(heroCreated(newHero)))
-            .catch(err => console.log(err));
+            .catch(err => err);
+
+        // dispatch(heroCreated(newHero));
 
         setHeroName('');
         setHeroDescr('');
@@ -36,14 +40,13 @@ const HeroesAddForm = () => {
 
     const renderFilters = (filters, status) => {
         if (status === "loading") {
-            return <option>Загрузка элементов</option>
+            return <option>Ładowanie elementów</option>
         } else if (status === "error") {
-            return <option>Ошибка загрузки</option>
+            return <option>Błąd ładowania</option>
         }
-
+        
         if (filters && filters.length > 0 ) {
             return filters.map(({name, label}) => {
-                // Один из фильтров нам тут не нужен
                 // eslint-disable-next-line
                 if (name === 'all')  return;
 
@@ -55,7 +58,7 @@ const HeroesAddForm = () => {
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={onSubmitHandled}>
             <div className="mb-3">
-                <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
+                <label htmlFor="name" className="form-label fs-4">Imię nowego bohatera</label>
                 <input 
                     required
                     type="text" 
@@ -63,25 +66,25 @@ const HeroesAddForm = () => {
                     value={heroName}
                     className="form-control" 
                     id="name" 
-                    placeholder="Как меня зовут?"
+                    placeholder="Jak on ma na imię?"
                     onChange= {(e) => setHeroName(e.target.value)}/>
             </div>
 
             <div className="mb-3">
-                <label htmlFor="text" className="form-label fs-4">Описание</label>
+                <label htmlFor="text" className="form-label fs-4">Opis</label>
                 <textarea
                     required
                     name="text" 
                     className="form-control" 
                     id="text" 
                     value={heroDescr}
-                    placeholder="Что я умею?"
+                    placeholder="Co on może robić?"
                     style={{"height": '130px'}}
                     onChange={(e) => setHeroDescr(e.target.value)}/>
             </div>
 
             <div className="mb-3">
-                <label htmlFor="element" className="form-label">Выбрать элемент героя</label>
+                <label htmlFor="element" className="form-label">Wybierz element bohatera</label>
                 <select 
                     required
                     className="form-select" 
@@ -89,12 +92,12 @@ const HeroesAddForm = () => {
                     name="element"
                     value={heroElement}
                     onChange={(e) => setHeroElement(e.target.value)}>
-                    <option >Я владею элементом...</option>
+                    <option >Posiada element...</option>
                     {renderFilters(filters, filterStatusLoading)}
                 </select>
             </div>
 
-            <button type="submit" className="btn btn-primary">Создать</button>
+            <button type="submit" className="btn btn-primary">Stworzyć</button>
         </form>
     )
 }
